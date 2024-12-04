@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  neo4j:
+    image: bitnami/neo4j:latest
+    container_name: bitnami-neo4j
+    ports:
+      - "7474:7474" # Neo4j web interface
+      - "7687:7687" # Bolt protocol
+    environment:
+      # Neo4j credentials
+      NEO4J_USERNAME: neo4j
+      NEO4J_PASSWORD: your_secure_password
+      
+      # Optional settings
+      NEO4J_AUTH: "enabled" # Enable authentication (default is enabled)
+      NEO4J_dbms_memory_pagecache_size: 1G # Set memory page cache size
+      NEO4J_dbms_memory_heap_initial__size: 512M # Set initial heap size
+      NEO4J_dbms_memory_heap_max__size: 1G # Set maximum heap size
+      NEO4J_ACCEPT_LICENSE: "yes" # Accept the Neo4j license
+      
+      # Configure database directory (optional)
+      NEO4J_dbms_directories_data: "/bitnami/neo4j/data"
+      NEO4J_dbms_directories_logs: "/bitnami/neo4j/logs"
+
+    volumes:
+      - neo4j_data:/bitnami/neo4j/data
+      - neo4j_logs:/bitnami/neo4j/logs
+
+volumes:
+  neo4j_data:
+    driver: local
+  neo4j_logs:
+    driver: local
